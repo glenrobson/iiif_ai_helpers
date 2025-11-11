@@ -1,6 +1,7 @@
 import anthropic
 import base64
 import httpx
+import requests
 import uuid
 
 # retrieves the first image service of the first painting annotation
