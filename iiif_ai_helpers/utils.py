@@ -1,6 +1,7 @@
 import anthropic
 import base64
 import httpx
+import json
 import requests
 import uuid
 
@@ -91,5 +92,5 @@ def create_annotation_page(annotations):
     }
 
 # Functions to store and update JSON using the free https://jsonblob.com service
-create_jsob_location = lambda url, data: (lambda r: (r, r.headers.get('Location')))(requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'}))
+create_json_location = lambda url, data: (lambda r: (r, r.headers.get('Location')))(requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'}))
 put_manifest_json = lambda url, data: requests.put(url, data=data, headers={'Content-Type': 'application/json'})
