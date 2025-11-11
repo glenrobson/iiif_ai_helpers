@@ -61,3 +61,30 @@ def transcribe_image(image_data, media_type, key):
         ],
     )
     return message.content[0].text
+
+
+def create_text_annotation(canvas_id, text, language, motiviation = 'commenting', text_granularity = None):
+    id = f"https://example.org/anno/{uuid.uuid4()}"
+    annotation = {
+        'id': id,
+        'type': 'Annotation',
+        'motivation': [motiviation],
+        'target': canvas_id,
+        'body': {
+            'id': f"{id}/body",
+            'type': 'TextualBody',
+            'format': 'text/plain',
+            'language': language,
+            'value': text
+        }
+    }
+    if text_granularity:
+        annotation['textGranularity'] = text_granularity
+    return annotation
+
+def create_annotation_page(annotations):
+    return {
+        'id': f"https://example.org/annopage/{uuid.uuid4()}",
+        'type': 'AnnotationPage',
+        'items': annotations
+    }
