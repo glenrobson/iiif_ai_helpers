@@ -25,8 +25,8 @@ def get_image_service(canvas):
 
 # Create an image URL, scaled to a size appropriate for the AI service used
 # Claude requests max of 1568x1568
-def get_image(image_service):
-    image_url = f"{image_service}/full/!1568,1568/0/default.jpg"
+def get_image(image_service, size="!1568,1568"):
+    image_url = f"{image_service}/full/{size}/0/default.jpg"
     media_type = "image/jpeg"
     # encode data
     image_data = base64.standard_b64encode(httpx.get(image_url).content).decode("utf-8")
