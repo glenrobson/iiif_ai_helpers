@@ -92,5 +92,34 @@ def create_annotation_page(annotations):
     }
 
 # Functions to store and update JSON using the free https://jsonblob.com service
-create_json_location = lambda url, data: (lambda r: (r, r.headers.get('Location')))(requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'}))
-put_manifest_json = lambda url, data: requests.put(url, data=data, headers={'Content-Type': 'application/json'})
+def create_json_location(url, data):
+    r = requests.post(
+        url,
+        data=json.dumps(data),
+        headers={'Content-Type': 'application/json'}
+    )
+    return r, r.headers.get('Location')
+
+def put_manifest_json(url, data):
+    """
+    Send a JSON payload to the given URL via HTTP PUT.
+
+    Args:
+        url (str): The target endpoint.
+        data (dict or str): The data to send. If a dict, it will be converted to JSON.
+
+    Returns:
+        requests.Response: The HTTP response object returned by the server.
+    """
+    # Ensure data is JSON string
+    if not isinstance(data, str):
+        json_data = json.dumps(data)
+    else:
+        json_data = data
+
+    headers = {"Content-Type": "application/json"}
+
+    # Perform the PUT request
+    response = requests.put(url, data=json_data, headers=headers)
+
+    return response
