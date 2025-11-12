@@ -3,6 +3,7 @@
 To import this code into a Jupiter Notebook you can do the following:
 
 # Import helper code
+```
 import os
 if not os.path.exists("iiif_ai_helpers"):
   !git clone https://github.com/glenrobson/iiif_ai_helpers.git
