@@ -67,10 +67,10 @@ def transcribe_image(image_data, media_type, prompt, system_prompt, key):
 
 
 def create_text_annotation(canvas_id, text, language, motiviation = 'commenting', text_granularity = None):
-    create_annotation(canvas_id, text, language, "text/plain", motiviation, text_granularity)
+    return create_annotation(canvas_id, text, language, "text/plain", motiviation, text_granularity)
 
 def create_html_annotation(canvas_id, text, language, motiviation = 'commenting', text_granularity = None):
-    create_annotation(canvas_id, text, language, "text/html", motiviation, text_granularity)
+    return create_annotation(canvas_id, text, language, "text/html", motiviation, text_granularity)
 
 def create_annotation(canvas_id, text, language, text_format, motivation = 'commenting', text_granularity = None):
     id = f"https://example.org/anno/{uuid.uuid4()}"
