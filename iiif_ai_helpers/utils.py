@@ -37,11 +37,12 @@ def get_image(image_service, size="!1568,1568"):
     }
 
 # Call the Anthropic API
-def transcribe_image(image_data, media_type, key):
+def transcribe_image(image_data, media_type, prompt, system_prompt, key):
     client = anthropic.Anthropic(api_key=key)
     message = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=4000,
+        system=system_prompt,
         messages=[
             {
                 "role": "user",
@@ -56,7 +57,7 @@ def transcribe_image(image_data, media_type, key):
                     },
                     {
                         "type": "text",
-                        "text": "Transcribe the text of the document in this image.  Do not describe the document or provide commentary, just the transcription."
+                        "text": prompt
                     }
                 ],
             }
@@ -66,16 +67,22 @@ def transcribe_image(image_data, media_type, key):
 
 
 def create_text_annotation(canvas_id, text, language, motiviation = 'commenting', text_granularity = None):
+    return create_annotation(canvas_id, text, language, "text/plain", motiviation, text_granularity)
+
+def create_html_annotation(canvas_id, text, language, motiviation = 'commenting', text_granularity = None):
+    return create_annotation(canvas_id, text, language, "text/html", motiviation, text_granularity)
+
+def create_annotation(canvas_id, text, language, text_format, motivation = 'commenting', text_granularity = None):
     id = f"https://example.org/anno/{uuid.uuid4()}"
     annotation = {
         'id': id,
         'type': 'Annotation',
-        'motivation': [motiviation],
+        'motivation': [motivation],
         'target': canvas_id,
         'body': {
             'id': f"{id}/body",
             'type': 'TextualBody',
-            'format': 'text/plain',
+            'format': text_format,
             'language': language,
             'value': text
         }
