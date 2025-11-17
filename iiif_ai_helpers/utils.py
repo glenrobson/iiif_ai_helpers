@@ -41,7 +41,7 @@ def transcribe_image(image_data, media_type, prompt, system_prompt, key):
     client = anthropic.Anthropic(api_key=key)
     message = client.messages.create(
         model="claude-sonnet-4-20250514",
-        max_tokens=4000,
+        max_tokens=6000,
         system=system_prompt,
         messages=[
             {
